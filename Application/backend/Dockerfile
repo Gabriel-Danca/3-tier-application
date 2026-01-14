@@ -1,20 +1,19 @@
-# Use the official Node.js image as a base image
-FROM node:14
+FROM python:3.13-slim
 
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    gcc \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install dependencies
-RUN npm install
+COPY requirements.txt .
 
-# Copy the rest of the application code to the working directory
+RUN pip install --no-cache-dir -r requirements.txt
+
 COPY . .
 
-# Expose the port that your app is running on
-EXPOSE 3500
+EXPOSE 8000
 
-# Command to run your application
-CMD ["node", "server.js"]
+CMD ["sh", "-c", "sleep 5 && python manage.py migrate && uvicorn app.main:app --host 0.0.0.0 --port 8000"]
