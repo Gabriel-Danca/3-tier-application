@@ -113,7 +113,7 @@ resource "aws_instance" "gdanca_control_node" {
   associate_public_ip_address = true
   key_name                    = "gdanca-terraform"
 
-  user_data = file("script.sh")
+  # user_data = file("script.sh")
 
   tags = {
     Name  = "gdanca_control_node"
