@@ -7,7 +7,7 @@ resource "aws_ecr_repository" "gdanca-ecr" {
     filter_type = "WILDCARD"
   }
 
-   tags = {
+  tags = {
     Name  = "gdanca_ecr"
     Owner = "gdanca"
   }
