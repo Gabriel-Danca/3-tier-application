@@ -137,3 +137,20 @@ resource "aws_instance" "gdanca_worker_node" {
   }
 }
 
+resource "local_file" "ansible_inventory" {
+  content = <<-EOF
+  [control_plane]
+  ${aws_instance.gdanca_control_node.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=./gdanca-key.pem
+
+  [workers]
+  ${aws_instance.gdanca_worker_node.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=./gdanca-key.pem
+
+  [k8s_cluster:children]
+  control_plane
+  workers
+  EOF
+
+  filename = "${path.module}/../../../ansible/inventory.ini"
+  file_permission = "0644"
+}
+
