@@ -56,8 +56,8 @@ resource "aws_route_table_association" "subnet1" {
 }
 
 resource "aws_security_group" "gdanca_k8s_sg" {
-  name        = "gdanca_k8s_sg"
-  vpc_id      = aws_vpc.gdanca_vpc.id
+  name   = "gdanca_k8s_sg"
+  vpc_id = aws_vpc.gdanca_vpc.id
 
   tags = {
     Name  = "gdanca_k8s_sg"
@@ -92,7 +92,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_nodeports" {
 resource "aws_vpc_security_group_ingress_rule" "allow_internal_traffic" {
   security_group_id            = aws_security_group.gdanca_k8s_sg.id
   referenced_security_group_id = aws_security_group.gdanca_k8s_sg.id
-  from_port                    = -1  
+  from_port                    = -1
   ip_protocol                  = "-1"
   to_port                      = -1
 }
@@ -129,7 +129,7 @@ resource "aws_instance" "gdanca_worker_node" {
   associate_public_ip_address = true
   key_name                    = "gdanca-terraform"
 
-#   user_data = file("script.sh")
+  #   user_data = file("script.sh")
 
   tags = {
     Name  = "gdanca_worker_node"
@@ -150,7 +150,7 @@ resource "local_file" "ansible_inventory" {
   workers
   EOF
 
-  filename = "${path.module}/../../../ansible/inventory.ini"
+  filename        = "${path.module}/../../../ansible/inventory.ini"
   file_permission = "0644"
 }
 
