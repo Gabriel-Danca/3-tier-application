@@ -7,9 +7,9 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "gdanca-k8s"
+    bucket = "gdanca-3tier-shared"
     key    = "state-file-folder"
-    region = "eu-west-1"
+    region = "eu-central-1"
   }
 }
 
